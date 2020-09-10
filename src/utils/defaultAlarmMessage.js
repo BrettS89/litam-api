@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   _id: 'litaf',
   message: 'Rise and shine, fam',
   user: {

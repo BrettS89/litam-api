@@ -1,10 +1,9 @@
-const jwt = require('jsonwebtoken');
-const keys = require('../config');
-const throwError = require('../utils/throwError');
+import jwt from 'jsonwebtoken';
+import keys from '../config/index.js';
+import throwError from './throwError.js';
 
-module.exports = async token => {
+export default async token => {
 	if (!token) throwError(401, 'no auth token');
-
 	try {
 		await jwt.verify(token, keys.jwtSecret);
 	} catch (e) {

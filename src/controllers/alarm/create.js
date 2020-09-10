@@ -1,10 +1,10 @@
-const Alarm = require('../../models/Alarm');
-const User = require('../../models/User');
-const Handlers = require('../../utils/handlers');
-const throwError = require('../../utils/throwError');
-const userAuth = require('../../utils/userAuth');
+import Alarm from '../../models/Alarm.js';
+import User from '../../models/User.js';
+import Handlers from '../../utils/handlers.js';
+import throwError from '../../utils/throwError.js';
+import userAuth from '../../utils/userAuth.js';
 
-module.exports = async (req, res) => {
+export default (req, res) => {
   try {
     const { _id } = await userAuth(req.header('authorization'));
     const { time, day, repeats } = req.body;

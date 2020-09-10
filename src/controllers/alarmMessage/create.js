@@ -1,9 +1,9 @@
-const AlarmMessage = require('../../models/AlarmMessage');
-const Handlers = require('../../utils/handlers');
-const throwError = require('../../utils/throwError');
-const userAuth = require('../../utils/userAuth');
+import AlarmMessage from '../../models/AlarmMessage.js';
+import Handlers from '../../utils/handlers.js';
+import throwError from '../../utils/throwError.js';
+import userAuth from '../../utils/userAuth.js';
 
-module.exports = async (req, res) => {
+export default async (req, res) => {
   try {
     const { _id } = await userAuth(req.header('authorization'));
     const { alarmId, message, song } = req.body;

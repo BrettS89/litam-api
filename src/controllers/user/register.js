@@ -1,11 +1,11 @@
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
-const keys = require('../../config');
-const User = require('../../models/User');
-const Handlers = require('../../utils/handlers');
-const throwError = require('../../utils/throwError');
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
+import keys from '../../config/index.js';
+import User from '../../models/User.js';
+import Handlers from '../../utils/handlers.js';
+import throwError from '../../utils/throwError.js';
 
-module.exports = async (req, res) => {
+export default async (req, res) => {
 	try {
     const { email, password, firstName, lastName, userName } = req.body;
 		const foundUser = await User.findOne({ email });

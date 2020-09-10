@@ -1,9 +1,9 @@
-exports.success = (res, status, data) => {
+const success = (res, status, data) => {
 	if (token) return res.status(status).json({ data });
 	if (!token) return res.status(status).json({ data });
 };
 
-exports.error = (res, e, endpoint) => {
+const error = (res, e, endpoint) => {
 	if (!e.status) {
 		console.log(`${endpoint} error: `, e);
 		return res.status(500).json({ message: e.message });
@@ -11,3 +11,5 @@ exports.error = (res, e, endpoint) => {
 	console.log(`${endpoint} error: `, e.error);
 	res.status(e.status).json({ message: e.error.message });
 };
+
+export default { success, error };

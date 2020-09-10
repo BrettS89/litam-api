@@ -1,5 +1,5 @@
-const getAlarms = require('./get');
+import getAlarms from './get.js';
 
-module.exports = {
+export default {
   getAlarms,
 };

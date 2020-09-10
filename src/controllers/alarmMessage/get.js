@@ -1,9 +1,10 @@
-const AlarmMessage = require('../../models/AlarmMessage');
-const Alarm = require('../../models/Alarm');
-const Handlers = require('../../utils/handlers');
-const throwError = require('../../utils/throwError');
-const userAuth = require('../../utils/userAuth');
-const defaultMessage = require('../../utils/defaultAlarmMessage');
+import Alarm from '../../models/Alarm.js';
+import AlarmMessage from '../../models/AlarmMessage.js';
+import Handlers from '../../utils/handlers.js';
+import throwError from '../../utils/throwError.js';
+import userAuth from '../../utils/userAuth.js';
+import defaultMessage from '../../utils/defaultAlarmMessage.js';
+
 const song = {
   albumArt: 'tbd',
   audio: 'https://airsity-prod.s3.amazonaws.com/songs/24+Hours+(feat.+Bobby+Shmurda%2C+Teefli+%26+Ty+Dolla+Sign)',
@@ -11,7 +12,7 @@ const song = {
   song: '24 Hours',
 };
 
-module.exports = async (req, res) => {
+export default async (req, res) => {
   try {
     const { _id } = await userAuth(req.header('authorization'));
     const { alarmId } = req.params;

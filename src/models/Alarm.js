@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const alarmSchema = new mongoose.Schema({
   dateCreated: { type: Date, default: new Date() },
@@ -11,4 +11,4 @@ const alarmSchema = new mongoose.Schema({
   alarmMessage: { type: mongoose.Schema.Types.ObjectId, ref: 'AlarmMessage', default: null },
 });
 
-module.exports = mongoose.model('Alarm', alarmSchema);
+export default mongoose.model('Alarm', alarmSchema);

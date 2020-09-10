@@ -1,7 +1,7 @@
-const createAlarmMessage = require('./create');
-const getAlarmMessage = require('./get');
+import createAlarmMessage from './create.js';
+import getAlarmMessage from './get.js';
 
-module.exports = {
+export default {
   createAlarmMessage,
   getAlarmMessage,
 };

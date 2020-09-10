@@ -1,6 +1,7 @@
-const router = require('express').Router();
-const Controllers = require('../controllers/alarm');
+import express from 'express';
+import Controllers from '../controllers/alarm/index.js';
+const router = express.Router();
 
 router.post('/create', Controllers.createAlarm);
 
-module.exports = router;
+export default router;

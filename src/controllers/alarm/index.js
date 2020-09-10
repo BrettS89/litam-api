@@ -1,5 +1,5 @@
-const createAlarm = require('./create');
+import createAlarm from './create';
 
-module.exports = {
+export default {
   createAlarm,
 };

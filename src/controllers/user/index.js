@@ -1,8 +1,8 @@
-const isLoggedIn = require('./isLoggedIn');
-const login = require('./login');
-const register = require('./register');
+import isLoggedIn from './isLoggedIn.js';
+import login from './login.js';
+import register from './register.js';
 
-module.exports = {
+export default {
   isLoggedIn,
   login,
   register,

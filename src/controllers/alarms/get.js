@@ -1,8 +1,8 @@
-const Alarm = require('../../models/Alarm');
-const Handlers = require('../../utils/handlers');
-const userAuth = require('../../utils/userAuth');
+import Alarm from '../../models/Alarm.js';
+import Handlers from '../../utils/handlers.js';
+import userAuth from '../../utils/userAuth.js';
 
-module.exports = async (req, res) => {
+export default async (req, res) => {
   try {
     const { _id } = await userAuth(req.header('authorization'));
     const alarms = await Alarm.find({ alarmMessage: null }).sort({ updatedDate: -1 }).limit(50);
