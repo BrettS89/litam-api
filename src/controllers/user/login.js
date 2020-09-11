@@ -13,7 +13,7 @@ module.exports = async ({ body: { email, password } }, res) => {
     if (!passwordMatch) throwError(401, 'Incorrect login credentials');
 		const token = jwt.sign({ _id: user._id }, keys.jwtSecret);
 		delete user.password;
-		Handlers.success(res, 200, { user, token }, null);
+		Handlers.success(res, 200, { user, token });
 	} catch (e) {
 		Handlers.error(res, e, 'login');
 	}

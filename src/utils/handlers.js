@@ -1,6 +1,5 @@
 exports.success = (res, status, data) => {
-	if (token) return res.status(status).json({ data });
-	if (!token) return res.status(status).json({ data });
+	return res.status(status).json({ data });
 };
 
 exports.error = (res, e, endpoint) => {
