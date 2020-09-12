@@ -30,10 +30,14 @@ module.exports = async (req, res) => {
       return das[index + 1];
     }
 
-    alarm.day = day(alarm.day, alarm.days);
-    alarm.updatedDate = new Date();
-    alarm.alarmMessage = null;
-    alarm.save();
+    if (alarm.days && alarm.days.length) {
+      alarm.day = day(alarm.day, alarm.days);
+      alarm.updatedDate = new Date();
+      alarm.alarmMessage = null;
+      alarm.save();
+    } else {
+      alarm.remove();
+    }
 
     const message = {
       ...(alarmMessage ? alarmMessage.toObject : defaultMessage),
