@@ -7,7 +7,7 @@ const userAuth = require('../../utils/userAuth');
 module.exports = async (req, res) => {
   try {
     const { _id } = await userAuth(req.header('authorization'));
-    const { time, day, days, amPm } = req.body;
+    const { time, day, days, amPm, displayTime } = req.body;
     const userQuery = User.findById(_id);
     const alarm = new Alarm({
       user: _id,
@@ -15,6 +15,7 @@ module.exports = async (req, res) => {
       day,
       days,
       amPm,
+      displayTime
     });
     const [user, savedAlarm] = await Promise.all([userQuery, alarm.save()]);
     if (!user) throwError(404, 'Invalid user');

@@ -5,7 +5,7 @@ const throwError = require('../../utils/throwError');
 const userAuth = require('../../utils/userAuth');
 const defaultMessage = require('../../utils/defaultAlarmMessage');
 const song = {
-  albumArt: 'tbd',
+  albumArt: 'https://upload.wikimedia.org/wikipedia/en/1/1f/Chris_Brown_-_Indigo.png',
   audio: 'https://airsity-prod.s3.amazonaws.com/songs/24+Hours+(feat.+Bobby+Shmurda%2C+Teefli+%26+Ty+Dolla+Sign)',
   artist: 'Ty$ Dolla',
   song: '24 Hours',
