@@ -9,6 +9,7 @@ const song = {
   audio: 'https://airsity-prod.s3.amazonaws.com/songs/24+Hours+(feat.+Bobby+Shmurda%2C+Teefli+%26+Ty+Dolla+Sign)',
   artist: 'Ty$ Dolla',
   song: '24 Hours',
+  id: 'tbd',
 };
 
 module.exports = async (req, res) => {
@@ -27,7 +28,7 @@ module.exports = async (req, res) => {
       if (days.length === 1) return day;
       const index = days.indexOf(day);
       if (days.length - 1 === index) return days[0];
-      return das[index + 1];
+      return days[index + 1];
     }
 
     if (alarm.days && alarm.days.length) {
