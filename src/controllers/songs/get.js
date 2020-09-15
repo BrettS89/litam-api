@@ -15,7 +15,7 @@ module.exports = async (req, res) => {
           artist: spotify.formatArtists(t.artists),
           albumArt: t.album.images[2].url,
           audio: t.preview_url,
-          id: t.track.id,
+          id: t.id,
         }
       })
     } else {

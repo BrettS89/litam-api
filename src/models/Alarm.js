@@ -10,6 +10,7 @@ const alarmSchema = new mongoose.Schema({
   day: { type: String, required: true },
   days: [{ type: String }],
   alarmMessage: { type: mongoose.Schema.Types.ObjectId, ref: 'AlarmMessage', default: null },
+  userWhoSetMessage: { type: String, default: null },
 });
 
 module.exports = mongoose.model('Alarm', alarmSchema);

@@ -35,6 +35,7 @@ module.exports = async (req, res) => {
       alarm.day = day(alarm.day, alarm.days);
       alarm.updatedDate = new Date();
       alarm.alarmMessage = null;
+      alarm.userWhoSetMessage = null;
       alarm.save();
     } else {
       alarm.remove();
