@@ -4,6 +4,7 @@ const Handlers = require('../../utils/handlers');
 const throwError = require('../../utils/throwError');
 const userAuth = require('../../utils/userAuth');
 const defaultMessage = require('../../utils/defaultAlarmMessage');
+const spotify = require('../../utils/spotify');
 const song = {
   albumArt: 'https://upload.wikimedia.org/wikipedia/en/1/1f/Chris_Brown_-_Indigo.png',
   audio: 'https://airsity-prod.s3.amazonaws.com/songs/24+Hours+(feat.+Bobby+Shmurda%2C+Teefli+%26+Ty+Dolla+Sign)',
@@ -14,8 +15,9 @@ const song = {
 
 module.exports = async (req, res) => {
   try {
-    const { _id } = await userAuth(req.header('authorization'));
+    await userAuth(req.header('authorization'));
     const { alarmId } = req.params;
+
     const [alarm, alarmMessage] = await Promise.all([
       Alarm.findById(alarmId),
       AlarmMessage.findOne({ alarm: alarmId }).populate('user'),
@@ -41,9 +43,17 @@ module.exports = async (req, res) => {
       alarm.remove();
     }
 
+    let songToSend;
+
+    if (alarmMessage) {
+      songToSend = await spotify.getTrack(alarmMessage.song);
+    } else {
+      songToSend = song
+    }
+
     const message = {
-      ...(alarmMessage ? alarmMessage.toObject : defaultMessage),
-      song,
+      ...(alarmMessage ? alarmMessage.toObject() : defaultMessage),
+      song: songToSend,
     };
 
     Handlers.success(res, 200, { alarmMessage: message });

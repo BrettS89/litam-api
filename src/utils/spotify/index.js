@@ -49,7 +49,32 @@ exports.getAccessToken = async () => {
   }
 };
 
-  exports.formatArtists = artists => {
+exports.getTrack = async trackId => {
+  const accessToken = await this.getAccessToken();
+  const TRACK_URI = `https://api.spotify.com/v1/tracks/${trackId}`;
+
+  const trackOptions = {
+    url: TRACK_URI,
+    method: 'get',
+    headers: {
+      Authorization: `Bearer ${accessToken}`
+    },
+  };
+
+  const { data } = await axios(trackOptions);
+
+  const song = {
+    song: data.name,
+    artist: this.formatArtists(data.artists),
+    albumArt: data.album.images[2].url,
+    audio: data.preview_url,
+    id: data.id,
+  }
+
+  return song;
+}
+
+exports.formatArtists = artists => {
   const artistsArr = [];
   for (let i = 0; i < artists.length; i++) {
 
