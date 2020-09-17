@@ -17,6 +17,7 @@ module.exports = async (req, res) => {
       user: _id,
       song,
       message,
+      forUser: alarm.user,
     });
     const savedMessage = await alarmMessage.save();
     alarm.alarmMessage = savedMessage._id;

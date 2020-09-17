@@ -9,6 +9,7 @@ const alarmSchema = new mongoose.Schema({
   amPm: { type: String, required: true },
   day: { type: String, required: true },
   days: [{ type: String }],
+  active: { type: Boolean, default: true },
   alarmMessage: { type: mongoose.Schema.Types.ObjectId, ref: 'AlarmMessage', default: null },
   userWhoSetMessage: { type: String, default: null },
 });

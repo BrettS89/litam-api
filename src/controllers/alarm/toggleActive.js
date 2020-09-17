@@ -6,12 +6,13 @@ const userAuth = require('../../utils/userAuth');
 module.exports = async (req, res) => {
   try {
     const { _id } = await userAuth(req.header('authorization'));
-    const { alarmId } = req.params;
-    const alarm = await Alarm.findById(alarmId);
-    if (!alarm) throwError(404, 'No alarm found with this id');
-    await alarm.remove();
-    Handlers.success(res, 200, { alarmId: alarm._id });
+    const { id } = req.params;
+    const alarm = await Alarm.findById(id);
+    if (!alarm) throwError(404, 'No alarm was found with this id');
+    alarm.active = !alarm.active;
+    const updatedAlarm = await alarm.save();
+    Handlers.success(res, 200, { alarm: updatedAlarm });
   } catch(e) {
-    Handlers.error(res, e, 'deleteAlarm');
+    Handlers.error(res, e, 'toggleActive');
   }
 };

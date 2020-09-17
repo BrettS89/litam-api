@@ -15,6 +15,7 @@ const song = {
 
 module.exports = async (req, res) => {
   try {
+    let removeAlarm = false;
     await userAuth(req.header('authorization'));
     const { alarmId } = req.params;
 
@@ -40,6 +41,7 @@ module.exports = async (req, res) => {
       alarm.userWhoSetMessage = null;
       alarm.save();
     } else {
+      removeAlarm = true;
       alarm.remove();
     }
 
@@ -47,6 +49,8 @@ module.exports = async (req, res) => {
 
     if (alarmMessage) {
       songToSend = await spotify.getTrack(alarmMessage.song);
+      alarmMessage.wasReceived = true;
+      alarmMessage.save();
     } else {
       songToSend = song
     }
@@ -56,7 +60,7 @@ module.exports = async (req, res) => {
       song: songToSend,
     };
 
-    Handlers.success(res, 200, { alarmMessage: message });
+    Handlers.success(res, 200, { alarmMessage: message, removeAlarm, alarmId: alarm._id });
   } catch(e) {
     Handlers.error(res, e, 'getAlarmMessage');
   }

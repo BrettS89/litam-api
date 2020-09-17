@@ -5,7 +5,7 @@ const userAuth = require('../../utils/userAuth');
 module.exports = async (req, res) => {
   try {
     const { _id } = await userAuth(req.header('authorization'));
-    const alarms = await Alarm.find()
+    const alarms = await Alarm.find({ active: true })
       .populate('user', ['firstName', 'lastName', 'photo', 'userName'])
       .sort({ updatedDate: -1 })
       .limit(50);
