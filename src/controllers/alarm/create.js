@@ -1,5 +1,6 @@
 const Alarm = require('../../models/Alarm');
 const User = require('../../models/User');
+const Speaker = require('../../models/Speaker');
 const Handlers = require('../../utils/handlers');
 const throwError = require('../../utils/throwError');
 const userAuth = require('../../utils/userAuth');
@@ -17,8 +18,11 @@ module.exports = async (req, res) => {
       amPm,
       displayTime
     });
-    const [user, savedAlarm] = await Promise.all([userQuery, alarm.save()]);
+    const [user, savedAlarm, speaker] = await Promise.all([userQuery, alarm.save(), Speaker.findOne({ user: _id })]);
     if (!user) throwError(404, 'Invalid user');
+    if (speaker) {
+      global.io.to(speaker.socketId).emit('ALARM_ADDED', { alarm: savedAlarm });
+    }
     Handlers.success(res, 201, { alarm: savedAlarm });
   } catch(e) {
     Handlers.error(res, e, 'createAlarm');
