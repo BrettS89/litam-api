@@ -24,7 +24,7 @@ module.exports = async (req, res) => {
       AlarmMessage.findOne({ alarm: alarmId }).populate('user'),
     ]);
 
-    if (!alarm) throwError(404, 'Alarm not found');
+    // if (!alarm) throwError(404, 'Alarm not found');
 
     // Update alarm
     const day = (day, days) => {
@@ -34,17 +34,19 @@ module.exports = async (req, res) => {
       return days[index + 1];
     }
 
-    if (alarm.days && alarm.days.length) {
-      alarm.day = day(alarm.day, alarm.days);
-      alarm.updatedDate = new Date();
-      alarm.alarmMessage = null;
-      alarm.userWhoSetMessage = null;
-      alarm.save();
-    } else {
-      removeAlarm = true;
-      alarm.remove();
+    if (alarm) {
+      if (alarm.days && alarm.days.length) {
+        alarm.day = day(alarm.day, alarm.days);
+        alarm.updatedDate = new Date();
+        alarm.alarmMessage = null;
+        alarm.userWhoSetMessage = null;
+        alarm.save();
+      } else {
+        removeAlarm = true;
+        alarm.remove();
+      }
     }
-
+    
     let songToSend;
 
     if (alarmMessage) {
@@ -60,7 +62,7 @@ module.exports = async (req, res) => {
       song: songToSend,
     };
 
-    Handlers.success(res, 200, { alarmMessage: message, removeAlarm, alarmId: alarm._id });
+    Handlers.success(res, 200, { alarmMessage: message, removeAlarm, alarmId: alarmId });
   } catch(e) {
     Handlers.error(res, e, 'getAlarmMessage');
   }

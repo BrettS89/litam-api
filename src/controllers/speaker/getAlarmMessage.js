@@ -6,6 +6,7 @@ const userAuth = require('../../utils/userAuth');
 const defaultMessage = require('../../utils/defaultAlarmMessage');
 const Handlers = require('../../utils/handlers');
 const spotify = require('../../utils/spotify');
+const User = require('../../models/User');
 const song = {
   albumArt: 'https://upload.wikimedia.org/wikipedia/en/1/1f/Chris_Brown_-_Indigo.png',
   audio: 'https://airsity-prod.s3.amazonaws.com/songs/24+Hours+(feat.+Bobby+Shmurda%2C+Teefli+%26+Ty+Dolla+Sign)',
@@ -19,6 +20,7 @@ module.exports = async (req, res) => {
     let removeAlarm = false;
     const givenId = req.header('authorization');
     const speaker = await Speaker.findOne({ givenId });
+    const user = await User.findById(speaker.user);
     if (!speaker) throwError('Unauthorized');
     const { alarmId } = req.params;
 
@@ -54,8 +56,11 @@ module.exports = async (req, res) => {
       alarmMessage.wasReceived = true;
       alarmMessage.save();
     } else {
-      songToSend = song
+      songToSend = song;
     }
+
+    user.isPlaying = alarmId;
+    user.save();
 
     const message = {
       ...(alarmMessage ? alarmMessage.toObject() : defaultMessage),

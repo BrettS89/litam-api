@@ -7,7 +7,7 @@ const alarmMessageSchema = new mongoose.Schema({
   song: { type: String, required: true },
   message: { type: String, default: null },
   forUser: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-  wasReceived: { type: Boolean, default: false }, 
+  wasReceived: { type: Boolean, default: false },
 });
 
 module.exports = mongoose.model('AlarmMessage', alarmMessageSchema);
