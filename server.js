@@ -14,8 +14,6 @@ const server = app.listen(keys.port, () => {
 
 const io = socket(server);
 
-// module.exports = io;
-
 socketConnection(io);
 
 global.io = io;
