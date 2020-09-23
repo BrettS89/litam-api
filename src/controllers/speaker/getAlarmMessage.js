@@ -26,7 +26,7 @@ module.exports = async (req, res) => {
 
     const [alarm, alarmMessage] = await Promise.all([
       Alarm.findById(alarmId),
-      AlarmMessage.findOne({ alarm: alarmId }),
+      AlarmMessage.findOne({ alarm: alarmId, wasReceived: { $ne: true } }),
     ]);
 
     if (!alarm) throwError(404, 'Alarm not found');
