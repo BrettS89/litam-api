@@ -31,7 +31,7 @@ module.exports = async (req, res) => {
       alarmMessage.wasReceived = true;
       alarmMessage.save();
     } else {
-      songToSend = song
+      songToSend = await spotify.getTrack(alarm.defaultSong);
     }
 
     const message = {
