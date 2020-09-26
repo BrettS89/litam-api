@@ -46,7 +46,8 @@ module.exports = async (req, res) => {
       alarm.save();
     } else {
       removeAlarm = true;
-      alarm.remove();
+      alarm.deleted = true;
+      alarm.save();
     }
 
     let songToSend;

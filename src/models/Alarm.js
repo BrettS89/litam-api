@@ -14,6 +14,7 @@ const alarmSchema = new mongoose.Schema({
   userWhoSetMessage: { type: String, default: null },
   isPublic: { type: Boolean, default: true },
   defaultSong: { type: String, required: true },
+  deleted: { type: Boolean, default: false },
 });
 
 module.exports = mongoose.model('Alarm', alarmSchema);
