@@ -42,7 +42,7 @@ module.exports = async (speakerId, userId) => {
     user_id = userId || speaker.user;
     const user = await User.findById(user_id);
     if (!user) throwError(404, 'No user was found');
-    const myAlarms = await Alarm.find({ user: user_id });
+    const myAlarms = await Alarm.find({ user: user_id, deleted: false });
     return myAlarms;
   } catch(e) {
     return [];
