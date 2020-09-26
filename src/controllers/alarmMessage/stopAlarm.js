@@ -1,6 +1,5 @@
 const Speaker = require('../../models/Speaker');
 const User = require('../../models/User');
-const AlarmMessage = require('../../models/AlarmMessage');
 const userAuth = require('../../utils/userAuth');
 const Handlers = require('../../utils/handlers');
 

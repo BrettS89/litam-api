@@ -21,31 +21,8 @@ module.exports = async (req, res) => {
 
     const [alarm, alarmMessage] = await Promise.all([
       Alarm.findById(alarmId),
-      AlarmMessage.findOne({ alarm: alarmId }).populate('user'),
+      AlarmMessage.findOne({ alarm: alarmId, wasReceived: { $ne: true } }).populate('user'),
     ]);
-
-    // if (!alarm) throwError(404, 'Alarm not found');
-
-    // Update alarm
-    // const day = (day, days) => {
-    //   if (days.length === 1) return day;
-    //   const index = days.indexOf(day);
-    //   if (days.length - 1 === index) return days[0];
-    //   return days[index + 1];
-    // }
-
-    // if (alarm) {
-    //   if (alarm.days && alarm.days.length) {
-    //     alarm.day = day(alarm.day, alarm.days);
-    //     alarm.updatedDate = new Date();
-    //     alarm.alarmMessage = null;
-    //     alarm.userWhoSetMessage = null;
-    //     alarm.save();
-    //   } else {
-    //     removeAlarm = true;
-    //     alarm.remove();
-    //   }
-    // }
     
     let songToSend;
 

@@ -56,7 +56,8 @@ module.exports = async (req, res) => {
       alarmMessage.wasReceived = true;
       alarmMessage.save();
     } else {
-      songToSend = song;
+      songToSend = await spotify.getTrack(alarm.defaultSong);
+      // songToSend = song;
     }
 
     user.isPlaying = alarmId;
