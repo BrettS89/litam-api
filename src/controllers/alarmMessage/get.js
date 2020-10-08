@@ -23,6 +23,25 @@ module.exports = async (req, res) => {
       Alarm.findById(alarmId),
       AlarmMessage.findOne({ alarm: alarmId, wasReceived: { $ne: true } }).populate('user'),
     ]);
+
+    // Update alarm
+    const day = (day, days) => {
+      if (days.length === 1) return day;
+      const index = days.indexOf(day);
+      if (days.length - 1 === index) return days[0];
+      return days[index + 1];
+    }
+
+    if (alarm.days && alarm.days.length) {
+      alarm.day = day(alarm.day, alarm.days);
+      alarm.updatedDate = new Date();
+      alarm.alarmMessage = null;
+      alarm.userWhoSetMessage = null;
+      alarm.save();
+    } else {
+      removeAlarm = true;
+      alarm.remove();
+    }
     
     let songToSend;
 
@@ -38,6 +57,8 @@ module.exports = async (req, res) => {
       ...(alarmMessage ? alarmMessage.toObject() : defaultMessage),
       song: songToSend,
     };
+
+    message.playAudio = true;
 
     Handlers.success(res, 200, { alarmMessage: message, removeAlarm, alarmId: alarmId });
   } catch(e) {
